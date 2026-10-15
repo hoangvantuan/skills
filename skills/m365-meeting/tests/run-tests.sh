@@ -5,7 +5,7 @@
 set -uo pipefail
 cd "$(dirname "$0")"
 FAIL=0
-for t in test_transcript_to_text.py test_meeting_resolver.py; do
+for t in test_transcript_to_text.py test_meeting_resolver.py test_sharepoint_and_quality.py; do
   echo "== $t"; python3 "$t" 2>&1 | tail -3 || FAIL=1
   python3 "$t" >/dev/null 2>&1 || FAIL=1
 done

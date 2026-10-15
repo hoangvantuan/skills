@@ -30,6 +30,7 @@ documented claim is noted next to it.
 | Attendance reports                  | `users/{me}/onlineMeetings/{meetingId}/attendanceReports`                    |
 | Attendance rows                     | `.../attendanceReports/{reportId}/attendanceRecords`                         |
 | Lookup by join link                 | `users/{me}/onlineMeetings?$filter=joinWebUrl eq '{url}'`                     |
+| Transcripts of a recording file     | `https://<tenant>.sharepoint.com/sites/<site>/_api/v2.1/drives/{driveId}/items/{itemId}/media/transcripts` (SharePoint host, not Graph) |
 
 The organizer id is a **function parameter**, not a `$filter`. Writing it as a filter fails.
 
@@ -72,7 +73,8 @@ python3 meeting-resolver.py decode --meeting-id 'MSox...'
 ```
 
 A join URL whose thread ends in `@thread.tacv2`, usually with a long number where the `0` sits,
-is a **channel** meeting. The id builds fine and the endpoint returns nothing useful.
+is a **channel** meeting. The id builds fine and the endpoint returns nothing useful; the
+transcript is reachable from the recording in SharePoint instead, `sharepoint-route.md`.
 
 ## 3. Paging
 

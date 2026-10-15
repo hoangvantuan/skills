@@ -128,7 +128,7 @@ def match(transcripts, events, tolerance_min=240, start=None, end=None, me=None)
     return rows
 
 
-def attended(events, me):
+def attended(events, me, include_channel=False):
     """Threads of meetings someone else organized, deduped, newest subject order.
 
     There is no bulk endpoint for meetings you merely attended, so each one costs a Graph call.
@@ -138,12 +138,13 @@ def attended(events, me):
     rows = []
     for thread, occurrences in index_events(events).items():
         first = occurrences[0]
-        if first["isChannel"] or first["organizerOid"] == me:
+        if (first["isChannel"] and not include_channel) or first["organizerOid"] == me:
             continue
         rows.append({
             "threadId": thread, "meetingId": build_meeting_id(first["organizerOid"], thread),
             "organizerOid": first["organizerOid"], "subject": first["subject"],
             "organizer": first["organizer"], "occurrences": len(occurrences),
+            "isChannel": first["isChannel"],
         })
     return sorted(rows, key=lambda r: (r["subject"] or ""))
 
@@ -162,6 +163,8 @@ def main():
     a = sub.add_parser("attended", help="threads organized by other people, one row per thread")
     a.add_argument("--events", required=True)
     a.add_argument("--me", required=True)
+    a.add_argument("--include-channel", action="store_true",
+                   help="also list channel threads, which only the SharePoint route can read")
     b = sub.add_parser("meeting-id", help="join URL -> meetingId for the transcripts endpoint")
     b.add_argument("--join-url", required=True)
     d = sub.add_parser("decode", help="meetingId -> organizer oid and threadId")
@@ -175,7 +178,7 @@ def main():
         oid, thread = decode_meeting_id(args.meeting_id)
         print(json.dumps({"organizerOid": oid, "threadId": thread}, ensure_ascii=False))
     elif args.cmd == "attended":
-        print(json.dumps(attended(_items(args.events), args.me), ensure_ascii=False, indent=2))
+        print(json.dumps(attended(_items(args.events), args.me, args.include_channel), ensure_ascii=False, indent=2))
     else:
         rows = match(_items(args.transcripts), _items(args.events), args.tolerance_min,
                      _utc(args.start, "UTC") if args.start else None,

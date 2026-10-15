@@ -99,5 +99,5 @@ Reconciling them is guesswork, and it is explicitly out of scope.
 | ---------------------------------- | --------------------------------------------------------------- |
 | Recording of someone else's meeting | `userId must match organizerId`, hard block for delegated auth |
 | Attendance for someone else's meeting | 403, same reason                                             |
-| Channel meeting artifacts           | not returned by these routes; they live in the team's SharePoint site |
+| Channel meeting artifacts           | not returned by these routes; read the recording's transcript from SharePoint, `sharepoint-route.md` |
 | Expired `onlineMeeting`             | per-meeting endpoints fail; the bulk list may still hold the item |

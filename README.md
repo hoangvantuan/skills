@@ -5,7 +5,7 @@ Plugin package cho Claude Code — phát triển các **skills**, **agents**, **
 ## Installation
 
 ```bash
-claude plugin install gh:hoangvantuan/shun-claude-plugin
+claude plugin install gh:hoangvantuan/skills
 ```
 
 ## Components
@@ -27,7 +27,7 @@ claude plugin install gh:hoangvantuan/shun-claude-plugin
 | `kinh-dich-lens` | Phân tích tình huống qua Kinh Dịch: 64 Quẻ & Lục Hào, Âm Dương tiêu trưởng, Ngũ Hành cân bằng hệ thống, Biến Thông (Nguyên-Hanh-Lợi-Trinh), Đạo Quân Tử tu dưỡng |
 | `m365-shared` | CLI for Microsoft 365: shared patterns — authentication (browser/device code/certificate/secret), installation, output formatting (json + JMESPath), common flags, error handling |
 | `m365-calendar` | Outlook calendar qua m365 CLI + Microsoft Graph: đọc lịch theo khoảng thời gian (`calendarView`, bung cả event lặp lại), CRUD calendar, tạo/sửa event, mời người tham dự, họp online Teams, đặt phòng họp (`beta/me/findRooms`), xem rảnh/bận, tìm khung giờ chung, dời một buổi trong chuỗi định kỳ, huỷ/xoá event. Kèm script quy đổi khoảng thời gian neo theo GMT+7 |
-| `m365-meeting` | Transcript cuộc họp Teams qua Microsoft Graph: tìm đúng buổi (kể cả họp định kỳ trùng tên, kể cả họp mình chỉ tham dự), tải transcript, ghi `.txt` có header metadata + `.vtt` gốc. Kèm recording, điểm danh, và preflight tự chẩn đoán 3 bức tường 403 (chưa đăng nhập, thiếu consent, chính sách tenant) kèm câu nhắn IT sẵn. Dừng ở tải file, không tóm tắt (việc của `meeting-minutes`) |
+| `m365-meeting` | Transcript cuộc họp Teams qua Microsoft Graph và SharePoint: tìm đúng buổi (kể cả họp định kỳ trùng tên, họp mình chỉ tham dự, họp kênh, link `meetingrecap`), kiểm tra ngôn ngữ và chất lượng transcript (đề xuất transcribe lại bằng Soniox khi kém, hỏi trước khi gửi audio), tải transcript, ghi `.txt` có header metadata + `.vtt` gốc. Kèm recording, điểm danh, và preflight tự chẩn đoán 3 bức tường 403 (chưa đăng nhập, thiếu consent, chính sách tenant) kèm câu nhắn IT sẵn. Dừng ở tải file, không tóm tắt (việc của `meeting-minutes`) |
 | `m365-teams` | Microsoft Teams management qua m365 CLI: teams, channels, messages (channel + chat), members. Hỗ trợ gửi tin nhắn HTML, chat 1:1/group, quản lý thành viên team/channel |
 | `m365-onedrive` | OneDrive personal file management qua m365 CLI: resolve OneDrive URL non-admin (Graph `me/drive`), upload/download/copy/move files, quản lý folder, sharing links, file versions |
 | `m365-sharepoint` | SharePoint Online qua m365 CLI — trọng tâm: truy cập/ghi **tài liệu nhóm/Teams** (resolve site qua group, non-admin). Gồm sites, lists, list items (OData + CAML), files (upload/download/checkin/checkout), folders, permissions (users/groups/sharing) |

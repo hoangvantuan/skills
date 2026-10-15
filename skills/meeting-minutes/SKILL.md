@@ -26,6 +26,7 @@ Nếu không rõ, hỏi user bằng AskUserQuestion:
 2. Hỗ trợ đọc file: `.txt`, `.md`, `.pdf`, `.docx`, `.vtt`, `.srt`
 3. Nếu input là file, đọc nội dung bằng Read tool (PDF dùng tham số `pages` cho file lớn)
 4. Scan nhanh nội dung: xác định ngôn ngữ gốc, độ dài, số người tham gia ước lượng
+5. Nếu input là transcript, đọc lướt vài đoạn đầu, giữa, cuối trước khi viết. Transcript **không dùng được** khi câu chữ vô nghĩa hoặc lẫn ngôn ngữ không khớp nội dung họp (ví dụ họp tiếng Việt mà ra câu kiểu "Ohh, chính, I think he would"), hoặc quá ít chữ so với thời lượng họp. Khi đó dừng lại, nói rõ dấu hiệu thấy được và đề nghị user cung cấp transcript tốt hơn. Không viết biên bản từ transcript kém, vì quyết định và action item rút ra từ đó sẽ sai mà không ai nhận ra.
 
 ### Bước 2: Hỏi bổ sung (tối đa 3 câu)
 
@@ -48,6 +49,7 @@ Quy tắc xử lý:
 - **Trích xuất quyết định**: tìm các cụm "đồng ý", "quyết định", "thống nhất", "approved", "decided", "agreed" trong nội dung
 - **Trích xuất action items**: tìm các cụm "sẽ làm", "phụ trách", "deadline", "trước ngày", "assigned to", "action", "TODO", "task"
 - **Suy luận owner**: nếu nội dung nói "Minh sẽ xử lý", owner = Minh
+- **Người nói ẩn danh**: nếu transcript chỉ có nhãn chung chung như `Speaker 1`, `Speaker 2` hoặc `@1`, `@2`, không gán owner theo nhãn đó và không đoán tên từ giọng điệu hay nội dung. Ghi owner là "Chưa xác định owner", trừ khi chính câu nói nêu tên người nhận việc ("anh Minh lo phần này")
 - **Suy luận deadline**: nếu nội dung nói "xong trước thứ 6", tính ngày cụ thể từ ngày họp
 - **Trích xuất pending / parking lot**: các hạng mục có thảo luận nhưng chưa có quyết định hay action chính thức, hoặc bị hoãn lại. Ví dụ: "đang cân nhắc", "sẽ bàn thêm", "chưa kết luận", "để sprint sau"
 - Mỗi action item cần owner và deadline, vì thiếu thì không ai follow-up được. Nếu không suy ra được, ghi "Cần xác nhận"

@@ -107,9 +107,15 @@ class Attended(unittest.TestCase):
         row = res.attended(load("events.json"), A_OID)[0]
         self.assertEqual(res.decode_meeting_id(row["meetingId"])[1], row["threadId"])
 
-    def test_channel_meetings_are_left_out_because_this_route_never_returns_them(self):
+    def test_channel_meetings_are_left_out_by_default_because_this_route_never_returns_them(self):
         rows = res.attended(load("events.json"), "99999999-9999-9999-9999-999999999999")
         self.assertFalse(any("tacv2" in r["threadId"] for r in rows))
+
+    def test_include_channel_surfaces_them_flagged_for_the_sharepoint_route(self):
+        rows = res.attended(load("events.json"), "99999999-9999-9999-9999-999999999999", include_channel=True)
+        channel = [r for r in rows if "tacv2" in r["threadId"]]
+        self.assertEqual(len(channel), 1)
+        self.assertTrue(channel[0]["isChannel"])
 
 
 class Handoff(unittest.TestCase):
